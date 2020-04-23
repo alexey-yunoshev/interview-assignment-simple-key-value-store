@@ -1,0 +1,36 @@
+{
+  "scripts": {
+    "format": "prettier --write \"*/**/*.ts\"",
+    "lint": "eslint --fix \"*/**/*.ts\"",
+    "test": "jest"
+  },
+  "dependencies": {
+    "amqplib": "^0.5.5"
+  },
+  "devDependencies": {
+    "@types/amqplib": "^0.5.13",
+    "@types/jest": "^25.1.4",
+    "@types/node": "^13.13.2",
+    "@typescript-eslint/parser": "^2.29.0",
+    "@typescript-eslint/eslint-plugin": "^2.29.0",
+    "eslint": "^6.8.0",
+    "jest": "^25.1.0",
+    "husky": "^4.2.5",
+    "lint-staged": "^10.1.7",
+    "prettier": "^2.0.5",
+    "ts-jest": "^25.2.1",
+    "typescript": "^3.8.3",
+    "ts-node": "^8.9.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged --concurrent false"
+    }
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier --write",
+      "eslint --fix"
+    ]
+  }
+}

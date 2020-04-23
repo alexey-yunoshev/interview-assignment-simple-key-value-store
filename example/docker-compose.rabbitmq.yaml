@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  queue:
+    image: "rabbitmq:3-alpine"
+    ports:
+    - "25672:25672"
+    - "4369:4369"
+    - "5672:5672"
