@@ -14,10 +14,11 @@
 import { readFileSync } from "fs";
 
 export interface BaseConfig {
+  // kvs reads messages from this queue
   inboundQueue: string;
   // kvs sends message responses to this queue
   outboundQueue: string;
-  // Whether to save snapshots of the current stat periodically
+  // Whether to save snapshots of the current state periodically
   snapshotOn: boolean;
   // How often to save snapshots.
   snapshotInterval: number;
@@ -43,8 +44,19 @@ export const defaultConfig: Config = {
   dataPath: "/usr/local/etc/kvs/data/",
 };
 
-const configPath = process.env.CONFIG_PATH || "/usr/local/etc/kvs/kvs.json";
+const configPath = process.env.CONFIG_PATH || "/usr/local/etc/kvs/kvs-config.json";
+
+let userConfig: Partial<Config> = {};
+
+try {
+  userConfig = JSON.parse(readFileSync(configPath, "utf-8"));
+} catch (e) {
+  if (!e.message.includes("ENOENT")) {
+    throw new Error(e);
+  }
+}
+
 export const config: Config = {
   ...defaultConfig,
-  ...JSON.parse(readFileSync(configPath, "utf-8")),
+  ...userConfig,
 };

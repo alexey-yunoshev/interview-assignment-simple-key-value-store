@@ -17,6 +17,6 @@ export class InvalidCommandError extends Error {
 
 export class InvalidNumberOfArgumentsError extends Error {
   constructor() {
-    super("Invalid number of arguments. Maybe you forgot to add the second double quote?");
+    super("Invalid number of arguments.");
   }
 }

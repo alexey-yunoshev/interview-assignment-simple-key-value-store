@@ -1,4 +1,4 @@
-import { InvalidCommandError, InvalidNumberOfArgumentsError, NoCommandError, BadlyQuotedValueError } from "./errors";
+import { InvalidCommandError, InvalidNumberOfArgumentsError, NoCommandError } from "./errors";
 import { Command } from "./Command";
 
 const commands = new Set<string>(Object.values(Command));
@@ -36,18 +36,6 @@ export interface DeleteQuery extends HasCommand<Command.Delete>, HasKey {}
 export interface SetQuery extends HasCommand<Command.Set>, HasKey, HasValue {}
 
 export type Query = GetQuery | DeleteQuery | SetQuery;
-
-export function isGetQuery(query: Query): query is GetQuery {
-  return query.command === Command.Get;
-}
-
-export function isDeleteQuery(query: Query): query is DeleteQuery {
-  return query.command === Command.Delete;
-}
-
-export function isSetQuery(query: Query): query is SetQuery {
-  return query.command === Command.Set;
-}
 
 function trimQuotes(value: string) {
   return value.substring(1, value.length - 1);

@@ -1,5 +1,5 @@
-import { Kvs, kvsFactory } from "../lib/kvs";
-import { config } from "../lib/config";
+import { Kvs, kvsFactory } from "../lib";
+import { config } from "../lib";
 
 let kvs: Kvs;
 

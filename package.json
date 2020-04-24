@@ -2,7 +2,10 @@
   "scripts": {
     "format": "prettier --write \"*/**/*.ts\"",
     "lint": "eslint --fix \"*/**/*.ts\"",
-    "test": "jest"
+    "test": "jest",
+    "build": "tsc",
+    "start:dev": "ts-node-dev --watch src --ignore-watch \"spec.ts$\" build/bin/kvs.ts",
+    "start:prod": "node build/bin/kvs"
   },
   "dependencies": {
     "amqplib": "^0.5.5"
@@ -18,6 +21,7 @@
     "husky": "^4.2.5",
     "lint-staged": "^10.1.7",
     "prettier": "^2.0.5",
+    "ts-node-dev": "^1.0.0-pre.44",
     "ts-jest": "^25.2.1",
     "typescript": "^3.8.3",
     "ts-node": "^8.9.0"

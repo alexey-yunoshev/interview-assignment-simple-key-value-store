@@ -1,0 +1,18 @@
+version: "3"
+
+volumes:
+  kvsdata:
+
+services:
+  kvs:
+    container_name: "kvs"
+    build:
+      context: "."
+    command: "npm run start:prod"
+    volumes:
+    - "kvsdata:/usr/local/etc/kvs/data/"
+    - "./kvs-config.json:/usr/local/etc/kvs/kvs-config.json"
+  rabbitmq:
+    container_name: "rabbitmq"
+    image: "rabbitmq:3-alpine"
+
