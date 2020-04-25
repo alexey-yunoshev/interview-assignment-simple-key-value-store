@@ -141,3 +141,47 @@ interface Config {
 }
 
 ```
+
+### Persistence
+
+#### Snapshots
+
+For demo purposes, a snapshot of the current state is made every 10 seconds by default. If no
+modifying operations (`set` or `delete`) have been performed within  the last 10
+seconds, then no snapshot is made. Upon restart `kvs` restores its state from the
+snapshot with the latest timestamp.
+
+#### Logs
+
+For demo purposes, modyfing operation queries are saved to log files. No more than 5
+per file.
+
+##### TODO
+Currently, only saving to log files works. `kvs` does not restore its state from
+them. What could be done to make it work:
+
+1. Add a flag that tells `kvs` which method to use to restore state.
+1. Preferably, optimize log files so that they don't have contiguous idempotent operations, etc.
+    For example, if we have a log file like this:
+    ```
+    set pet:1 cat
+    set pet:1 cat
+    set pet:1 cat
+    ```
+    It should be optimized to this:
+    ```
+    set pet:1 cat
+    ```
+1. Upon start, restore state from the files. Here's the possible pseudo code:
+    ```typescript
+   function restoreStateFromLogFiles() {
+     // filePaths must be sorted from earliest to latest 
+     const filePaths = getLogFilePaths();
+     for (const filePath of filePaths) {
+       const queries = readFile(filePath).split('\n');
+       for (const query of queries) {
+         queryHandler(query)
+       }
+     }
+   }
+   ```
